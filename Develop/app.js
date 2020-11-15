@@ -26,6 +26,21 @@ app.get('/api/notes', (req, res) => {
     res.json(notesDB);
 })
 
+// POST route
+app.post('/api/notes', (req, res) => {
+    let id = uniqid()
+    let reqBody = req.body;
+    let newNote = {
+        "title": reqBody.title,
+        "text": reqBody.text,
+        "id": id
+    }
+    let notesDB = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
+    notesDB.push(newNote);
+    fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB))
+    res.json(notesDB);
+})
+
 //start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
