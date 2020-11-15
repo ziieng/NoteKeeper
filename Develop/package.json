@@ -1,14 +1,20 @@
 {
-  "name": "note-taker",
+  "name": "note-keeper",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "Basic app for keeping, displaying, and eventually deleting notes",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "watch": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Zii Engelhardt",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "uniqid": "^5.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
