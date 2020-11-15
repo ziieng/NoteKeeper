@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware Body Parser
 app.use(express.json());
+app.use(express.static('public'));
 app.use(express.urlencoded({
     extended: false
 }))
@@ -37,7 +38,9 @@ app.post('/api/notes', (req, res) => {
     }
     let notesDB = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
     notesDB.push(newNote);
-    fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB))
+    fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB), (err) => {
+        if (err) throw err
+    })
     res.json(notesDB);
 })
 
@@ -51,7 +54,9 @@ app.delete('/api/notes/:id', (req, res) => {
         res.status(500).json(notesDB)
     } else {
         notesDB.splice(index, 1)
-        fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB))
+        fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB), (err) => {
+            if (err) throw err
+        })
         res.status(200).json(notesDB);
     }
 })
