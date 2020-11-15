@@ -41,6 +41,21 @@ app.post('/api/notes', (req, res) => {
     res.json(notesDB);
 })
 
+// DELETE route
+app.delete('/api/notes/:id', (req, res) => {
+    let delNote = req.params.id
+    let notesDB = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
+    let index = notesDB.findIndex((el) => el.id == delNote)
+    if (index < 0) {
+        console.log("ID not found")
+        res.status(500).json(notesDB)
+    } else {
+        notesDB.splice(index, 1)
+        fs.writeFile(path.join(__dirname, '/db/db.json'), JSON.stringify(notesDB))
+        res.status(200).json(notesDB);
+    }
+})
+
 //start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
